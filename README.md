@@ -10,7 +10,7 @@ to intitialize BERT-ASC by PT model, kindly download the PT from  [here](https:/
 	python code/evaluate.py --dataset semeval --device cuda:0
   
   
-### Processing:
+### Pre-processing:
 ##### generate seed words for a given dataset (e.g., semeval): 
 	python L-LDA/run_l_LDA.py --dataset semeval
 note that the code of L-LDA is available [here](https://github.com/JoeZJH/Labeled-LDA-Python) 
