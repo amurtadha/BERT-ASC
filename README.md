@@ -1,4 +1,4 @@
-### BERT-ASC: Auxiliary-Sentence Construction for Implicit Aspect Learning in Sentiment Analysis [[1]](url). 
+### BERT-ASC: Auxiliary-Sentence Construction for Implicit Aspect Learning in Sentiment Analysis [[1]](https://arxiv.org/abs/2203.11702). 
 
 to intitialize BERT-ASC by PT model, kindly download the PT from  [here](https://drive.google.com/file/d/11pceo04PfR6W75DPCPBgZIdBxG6HP8RR/view?usp=sharing)
 
