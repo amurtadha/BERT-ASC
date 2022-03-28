@@ -1,6 +1,6 @@
 ### BERT-ASC: Auxiliary-Sentence Construction for Implicit Aspect Learning in Sentiment Analysis [[1]](https://arxiv.org/abs/2203.11702). 
 
-to intitialize BERT-ASC by PT model, kindly download the PT from  [here](https://drive.google.com/file/d/11pceo04PfR6W75DPCPBgZIdBxG6HP8RR/view?usp=sharing)
+To intitialize BERT-ASC by PT model, kindly download the PT from  [here](https://drive.google.com/file/d/11pceo04PfR6W75DPCPBgZIdBxG6HP8RR/view?usp=sharing)
 
 
 ##### train BERT-ASC: 
@@ -13,7 +13,7 @@ to intitialize BERT-ASC by PT model, kindly download the PT from  [here](https:/
 ### Pre-processing:
 ##### generate seed words for a given dataset (e.g., semeval): 
 	python L-LDA/run_l_LDA.py --dataset semeval
-note that the code of L-LDA is available [here](https://github.com/JoeZJH/Labeled-LDA-Python) 
+The original code of L-LDA is available [here](https://github.com/JoeZJH/Labeled-LDA-Python) 
 ##### generate  the semantic candidates: 
 	python ASC_generating/semantic_candidate_generating.py --dataset semeval
 
