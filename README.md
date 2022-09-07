@@ -4,9 +4,7 @@
  
  This is the source code for the paper: Murtadha, Ahmed, et al. "BERT-ASC: Auxiliary-Sentence Construction for Implicit Aspect Learning in Sentiment Analysis" [[1]](https://arxiv.org/abs/2203.11702). 
  
- If you use the code,  please cite the paper: 
-```
-```
+
  
 
 # Data
@@ -67,4 +65,12 @@ The original code of L-LDA is publicly [available](https://github.com/JoeZJH/Lab
 		- --dataset =\{semeval,sentihood\}	
 		- --device ="cuda:0"	
 
-  
+ If you use the code,  please cite the paper: 
+```
+@article{murtadha2022bert,
+  title={BERT-ASC: Auxiliary-Sentence Construction for Implicit Aspect Learning in Sentiment Analysis},
+  author={Murtadha, Ahmed and Pan, Shengfeng and Wen, Bo and Su, Jianlin and Zhang, Wenze and Liu, Yunfeng},
+  journal={arXiv preprint arXiv:2203.11702},
+  year={2022}
+}
+```
