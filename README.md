@@ -57,6 +57,7 @@ The original code of L-LDA is publicly [available](https://github.com/JoeZJH/Lab
 		- --device ="cuda:0"
 	
 # Evalutaion: 	
+* To evaluate  BERT-ASC:
 	* Go to  code/  
 	* Run the following code 
 	```
@@ -65,6 +66,5 @@ The original code of L-LDA is publicly [available](https://github.com/JoeZJH/Lab
 	* The params could be :
 		- --dataset =\{semeval,sentihood\}	
 		- --device ="cuda:0"	
-# evaluate BERT-ASC: 
-	python code/evaluate.py --dataset semeval --device cuda:0
+
   
