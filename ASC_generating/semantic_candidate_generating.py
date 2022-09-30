@@ -16,13 +16,12 @@ from tqdm import tqdm
 import argparse
 
 def semeval(threshold=.2):
-    model = gensim.models.Word2Vec.load(r'D:\data\domain_specific_embedding\restaurant/restaurant.bin')
+    model = gensim.models.Word2Vec.load(r'embeddings/restaurant.bin')
     path_base= '../datasets/raw/semeval/'
     categories= pk.load(open('../datasets/semeval/categories.pk', 'rb'))
     category_seed_words= pk.load(open('../datasets/semeval/categories_seeds.pk', 'rb'))
     categories.append('anecdotes')
     for phase, file_src,  in zip(['train', 'test'], ['Restaurants_Train_v2.xml', 'Restaurants_Test_Gold.xml']):
-    # for phase, file_src in zip([ 'test'], [ 'Restaurants_Test_Gold.xml']):
         data_to_save =[]
         corpus = list()
         aspect = []
@@ -92,7 +91,6 @@ def sentihood(threslod=.3):
     category_seed_words = pk.load(open('../datasets/sentihood/categories_seeds.pk', 'rb'))
     # categories.append('anecdotes')
     categories = {'general', 'price', 'transit-location', 'safety'}
-    # pk.dump(categories, open('../datasets/sentihood/categories.pk', 'wb'))
     for phase in ['train', 'test', 'dev']:
         data_to_save = []
         with open('../datasets/raw/sentihood/sentihood-{}.json'.format(phase), 'r') as f:
@@ -108,8 +106,7 @@ def sentihood(threslod=.3):
 
                 category_representatives={a['aspect']:[] for a in aspects if a['aspect'] in categories}
                 aspect_category=[a['aspect'] for a in aspects if a['aspect'] in categories]
-                # if not len(aspect_category):
-                #     continue
+              
                 aspect_polarity={a['target_entity']+'#'+a['aspect']: a['sentiment'] for a in aspects if a['aspect'] in categories}
                 for a in aspect_category:
 
