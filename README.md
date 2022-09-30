@@ -30,7 +30,7 @@ pip install -r requirements.txt
 The original code of L-LDA is publicly [available](https://github.com/JoeZJH/Labeled-LDA-Python) 
 * Generate the semantic candidates: 
 	* Go to  ASC_generating/  
-	* The processed data and embedings for restaurant is [available](https://drive.google.com/file/d/1L4LRi3BWoCqJt5h45J2GIAW9eP_zjiNc/view). Note that these files were orginally proccessed [in](https://github.com/ruidan/Unsupervised-Aspect-Extraction)
+	* The processed data and embedings for restaurant is [available](https://drive.google.com/file/d/1L4LRi3BWoCqJt5h45J2GIAW9eP_zjiNc/view). Note that these files were orginally proccessed by [Ruidan He](https://github.com/ruidan/Unsupervised-Aspect-Extraction)
 	* To process your own data and embeddings, put your data file in datasets then run this code:
 	```
 	python preprocessing.py
