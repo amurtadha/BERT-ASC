@@ -133,7 +133,7 @@ def get_parse(ann):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--dataset', default='semeval', type=str, help='semeval, sentihood', required=True)
+    parser.add_argument('--dataset', default='semeval', type=str,  choices=['semeval','sentihood'], help='semeval, sentihood', required=True)
 
     opt = parser.parse_args()
     extract_opnion_words(dataset=opt.dataset)
