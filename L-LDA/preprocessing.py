@@ -76,35 +76,6 @@ def generate_semeval14_training(train=True):
     pk.dump(data, open('../datasets/semeval/{}.pk'.format(file_save), 'wb'))
     # print(len(data))
 
-# def generate_sentihood_data(domain, train):
-#     file_save = 'test'
-#     df_data = pd.read_csv('../datasets/{}/test.csv'.format(domain))
-#     if train:
-#         file_save= 'train'
-#         df_data= pd.read_csv('../datasets/{}/train.csv'.format(domain))
-#         if domain in ['sentihood', 'mams']:
-#             df_dev = pd.read_csv('../datasets/{}/dev.csv'.format(domain))
-#             df_data = pd.concat([df_data, df_dev], axis=0, ignore_index=True)
-#
-#
-#     data_to_save=dict()
-#     for i in tqdm(range(len(df_data))):
-#         text, category, label= df_data.loc[i][['text', 'category', 'label']].values
-#         label= int(label)
-#         if label == 0:
-#             continue
-#
-#         text = text.strip().lower()
-#         text = text.translate(str.maketrans('', '', string.punctuation))
-#         text = ' '.join([w for w in word_tokenize(text) if w not in stops])
-#         try:
-#             data_to_save[category]+=' '+text
-#         except:
-#             data_to_save[category]= text
-#
-#     pk.dump(data_to_save, open('data/{0}/{1}.pk'.format(domain,file_save), 'wb'))
-#     print(len(data_to_save))
-#
 
 
 def process_sentihood():
@@ -227,29 +198,10 @@ def process_semeval_tf_idf():
 
 
 
-def visualize_dataset(aspect=None):
-    for phase, file_src in zip(['train', 'test'], ['Restaurants_Train_v2.xml','Restaurants_Test_Gold.xml']):
-
-        e = xml.etree.ElementTree.parse(path_base + 'semeval/' + file_src).getroot()
-        reviews = e.findall('sentence')
-        for review in (reviews):
-            text = review.find('text').text
-            aspect_term = []
-            options = review.findall('aspectCategories')
-            for option in (options):
-                suboptions = option.findall('aspectCategory')
-                for suboption in (suboptions):
-                    aspect_term.append(suboption.get("category"))
-            if len(aspect_term)>1 or aspect not in aspect_term:
-                continue
-
-
-            print(text)
 if __name__ == '__main__':
 
     process_sentihood_tf_idf()
-    # process_semeval_tf_idf()
-    # visualize_dataset(aspect='service')
-    pass
+    process_semeval_tf_idf()
+   
 
 
