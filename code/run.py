@@ -313,7 +313,7 @@ class Instructor:
 def main():
     # Hyper Parameters
     parser = argparse.ArgumentParser()
-    parser.add_argument('--dataset', default='semeval', type=str, help='semeval, sentihood', required=True)
+    parser.add_argument('--dataset', default='semeval',  choices=['semeval','sentihood'], type=str, help='semeval, sentihood', required=True)
     parser.add_argument('--initializer', default='xavier_uniform_', type=str)
     parser.add_argument('--learning_rate', default=3e-5, type=float, help='try 5e-5, 2e-5')
     parser.add_argument('--dropout', default=0.1, type=float)
