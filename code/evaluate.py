@@ -130,7 +130,7 @@ class Instructor:
 def main():
     # Hyper Parameters
     parser = argparse.ArgumentParser()
-    parser.add_argument('--dataset', default='semeval', type=str, help='semeval, sentihood', required=True)
+    parser.add_argument('--dataset', default='semeval', type=str,  choices=['semeval','sentihood'], help='semeval, sentihood', required=True)
     parser.add_argument('--initializer', default='xavier_uniform_', type=str)
     parser.add_argument('--learning_rate', default=3e-5, type=float, help='try 5e-5, 2e-5')
     parser.add_argument('--dropout', default=0.1, type=float)
@@ -178,17 +178,13 @@ def main():
 
 
     opt.pt_model =r'plm/pt/'
-    # opt.pt_model ='bert-base-uncased'
     print(opt.pt_model)
-    # opt.model_class = Relation
     opt.model_class = ABSATokenizer
     opt.dataset_file = dataset_files
     opt.inputs_cols = ['text_bert_indices', 'bert_segments_ids', 'input_mask', 'label']
     opt.initializer = initializers[opt.initializer]
-    # opt.optimizer = optimizers[opt.optimizer]
 
     os.environ["CUDA_VISIBLE_DEVICES"] = '0'
-
     opt.device = torch.device(opt.device if torch.cuda.is_available() else 'cpu') \
         if opt.device is None else torch.device(opt.device)
 
