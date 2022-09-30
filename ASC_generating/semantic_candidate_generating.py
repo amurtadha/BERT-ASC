@@ -87,9 +87,8 @@ def semeval(threshold=.2):
         f.close()
 
 def sentihood(threslod=.3):
-    model = gensim.models.Word2Vec.load(r'D:\data\domain_specific_embedding\restaurant/restaurant.bin')
+    model = gensim.models.Word2Vec.load(r'embeddings/restaurant.bin')
     category_seed_words = pk.load(open('../datasets/sentihood/categories_seeds.pk', 'rb'))
-    # categories.append('anecdotes')
     categories = {'general', 'price', 'transit-location', 'safety'}
     for phase in ['train', 'test', 'dev']:
         data_to_save = []
@@ -98,7 +97,6 @@ def sentihood(threslod=.3):
             for d in tqdm(data):
                 aspects = d['opinions']
                 text = d['text']
-                # text = text.replace('/', ' ')
                 text_w_stops = text.replace('LOCATION1', '').replace('LOCATION2', '')
                 text_w_stops = text_w_stops.strip().lower()
                 text_w_stops = text_w_stops.translate(str.maketrans('', '', string.punctuation))
@@ -181,7 +179,7 @@ def sentihood(threslod=.3):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--dataset', default='semeval', type=str, help='semeval, sentihood', required=True)
+    parser.add_argument('--dataset', default='semeval', type=str, choices=['semeval','sentihood'],  required=True)
 
     opt = parser.parse_args()
     if opt.dataset =='semeval':
