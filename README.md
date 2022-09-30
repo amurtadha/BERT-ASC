@@ -34,12 +34,11 @@ The original code of L-LDA is publicly [available](https://github.com/JoeZJH/Lab
 	```
 	python semantic_candidate_generating.py --dataset semeval
 	```
+* Generate the synticatic candidates: 
 	* Run the following code to generate the synticatic informatiom
 	```
 	python ASC_generating/opinion_words_extracting.py --dataset semeval
 	```
-* The params could be :
-     - --dataset =\{semeval,sentihood\}	
 
 
 
