@@ -34,8 +34,7 @@ The original code of L-LDA is publicly [available](https://github.com/JoeZJH/Lab
 	* To process your own data and embeddings, put your data file in datasets then run this code:
 	```
 	python preprocessing.py
-	python generate_domain_embedding.py
-	
+	python generate_domain_embedding.py	
 	```
 	* Run the following code to extract the semantic candidates
 	```
