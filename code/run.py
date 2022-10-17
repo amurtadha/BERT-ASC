@@ -11,7 +11,6 @@ from torch.utils.data.sampler import  WeightedRandomSampler
 import torch
 from torch.utils.data import DataLoader, random_split, TensorDataset
 from data_utils import ABSATokenizer, ABSADataset_absa_bert_semeval_json, ABSADataset_absa_bert_sentihood_json
-from layers.optimization  import BertAdam
 from evaluation import *
 import torch.nn.functional as F
 import  numpy as np
@@ -363,7 +362,7 @@ def main():
 
 
     opt.pt_model =r'plm/pt/'
-    print(opt.pt_model)
+    logger.info(opt.pt_model)
     
     opt.model_class = ABSATokenizer
     opt.dataset_file = dataset_files
