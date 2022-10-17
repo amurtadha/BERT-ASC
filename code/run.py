@@ -361,7 +361,7 @@ def main():
 
 
 
-    opt.pt_model =r'plm/pt/'
+    opt.pt_model ='bert-base-uncased'
     logger.info(opt.pt_model)
     
     opt.model_class = ABSATokenizer
