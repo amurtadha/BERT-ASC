@@ -1,12 +1,11 @@
 
 import logging
 import argparse
-
 import os
 import sys
 import random
 import numpy
-
+from transformers import AdamW
 from torch.utils.data.sampler import  WeightedRandomSampler
 import torch
 from torch.utils.data import DataLoader, random_split, TensorDataset
@@ -73,30 +72,21 @@ class Instructor:
         return 1.0 - x
 
     def _train(self, optimizer, train_data_loader, val_data_loader, t_total):
-
-
-
         max_val_f1 = 0
         global_step = 0
         loss_total= 0
         setp_total= 0
         path = None
-
-
         for epoch in range(self.opt.num_epoch):
             logger.info('>' * 100)
             logger.info('epoch: {}'.format(epoch))
 
             self.model.train()
             for i_batch, sample_batched in enumerate(tqdm(train_data_loader)):
-
                 optimizer.zero_grad()
-
                 sample_batched= [b.to(self.opt.device) for b in sample_batched]
                 input_ids, token_type_ids, attention_mask, labels= sample_batched
-
                 loss= self.model(input_ids, token_type_ids, attention_mask, labels)
-
                 loss.backward()
                 with torch.no_grad():
                     loss_total+= loss.item()
@@ -263,20 +253,12 @@ class Instructor:
         num_train_steps = int(len(train_data_loader) * self.opt.num_epoch)
         
 
-        param_optimizer = [(k, v) for k, v in self.model.named_parameters() if v.requires_grad == True]
-        param_optimizer = [n for n in param_optimizer if 'pooler' not in n[0]]
-        no_decay = ['bias', 'LayerNorm.bias', 'LayerNorm.weight']
-        optimizer_grouped_parameters = [
-            {'params': [p for n, p in param_optimizer if not any(nd in n for nd in no_decay)], 'weight_decay': 0.01},
-            {'params': [p for n, p in param_optimizer if any(nd in n for nd in no_decay)], 'weight_decay': 0.0}
-        ]
+        
         t_total = num_train_steps
-        optimizer = BertAdam(optimizer_grouped_parameters,
-                             lr=self.opt.learning_rate,
-                             warmup=self.opt.warmup_proportion,
-                             t_total=t_total)
-
-        best_model_path = self._train( optimizer, train_data_loader, val_data_loader, t_total)
+        optimizer= self.opt.optimizer(self.model.parameters(), lr=self.opt.learning_rate,
+                                            weight_decay=self.opt.l2reg)
+       
+        best_model_path = self._train(optimizer, train_data_loader, val_data_loader, t_total)
         self.model.load_state_dict(best_model_path)
         self.model.eval()
 
@@ -313,7 +295,6 @@ def main():
     # Hyper Parameters
     parser = argparse.ArgumentParser()
     parser.add_argument('--dataset', default='semeval',  choices=['semeval','sentihood'], type=str, help='semeval, sentihood', required=True)
-    parser.add_argument('--initializer', default='xavier_uniform_', type=str)
     parser.add_argument('--learning_rate', default=3e-5, type=float, help='try 5e-5, 2e-5')
     parser.add_argument('--dropout', default=0.1, type=float)
     parser.add_argument('--l2reg', default=0.001, type=float)
@@ -353,21 +334,14 @@ def main():
         'val': '../datasets/{}/bert_dev.json'.format( opt.dataset)
     }
 
-    initializers = {
-        'xavier_uniform_': torch.nn.init.xavier_uniform_,
-        'xavier_normal_': torch.nn.init.xavier_normal,
-        'orthogonal_': torch.nn.init.orthogonal_,
-    }
-
-
 
     opt.pt_model ='bert-base-uncased'
     logger.info(opt.pt_model)
-    
+    opt.optimizer = AdamW
     opt.model_class = ABSATokenizer
     opt.dataset_file = dataset_files
     opt.inputs_cols = ['text_bert_indices', 'bert_segments_ids', 'input_mask', 'label']
-    opt.initializer = initializers[opt.initializer]
+    opt.initializer = torch.nn.init.xavier_uniform_
     opt.device = torch.device(opt.device if torch.cuda.is_available() else 'cpu') \
         if opt.device is None else torch.device(opt.device)
 
