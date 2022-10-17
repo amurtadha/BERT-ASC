@@ -294,19 +294,20 @@ class Instructor:
 def main():
     # Hyper Parameters
     parser = argparse.ArgumentParser()
-    parser.add_argument('--dataset', default='semeval',  choices=['semeval','sentihood'], type=str, help='semeval, sentihood', required=True)
-    parser.add_argument('--learning_rate', default=3e-5, type=float, help='try 5e-5, 2e-5')
+    parser.add_argument('--dataset', default='semeval',  choices=['semeval','sentihood'], type=str, required=True)
+    parser.add_argument('--learning-rate', default=3e-5, type=float, help='try 5e-5, 2e-5')
     parser.add_argument('--dropout', default=0.1, type=float)
     parser.add_argument('--l2reg', default=0.001, type=float)
-    parser.add_argument('--warmup_proportion', default=0.01, type=float)
+    parser.add_argument('--warmup-proportion', default=0.01, type=float)
     parser.add_argument('--num_epoch', default=5, type=int, help='')
-    parser.add_argument("--train_batch_size", default=32,type=int, help="Total batch size for training.")
-    parser.add_argument("--eval_batch_size", default=64, type=int, help="Total batch size for eval.")
-    parser.add_argument('--log_step', default=50, type=int)
+    parser.add_argument("--train-batch-size", default=32,type=int, help="Total batch size for training.")
+    parser.add_argument("--eval-batch-size", default=64, type=int, help="Total batch size for eval.")
+    parser.add_argument('--log-step', default=50, type=int)
     parser.add_argument('--pretrained_bert_name', default='bert-base-uncased', type=str)
     parser.add_argument('--max_seq_len', default=120, type=int)
-    parser.add_argument('--lebel_dim', default=5, type=int)
+    parser.add_argument('--lebel-dim', default=5, type=int)
     parser.add_argument('--hops', default=3, type=int)
+    parser.add_argument('--pt-model', default='activebus/BERT-PT_rest', type=str)
     parser.add_argument('--save_model', default=0, type=int)
     parser.add_argument('--device', default='cuda:5', type=str, help='e.g. cuda:0')
     parser.add_argument('--seed', default=42, type=int, help='set seed for reproducibility')
@@ -334,8 +335,6 @@ def main():
         'val': '../datasets/{}/bert_dev.json'.format( opt.dataset)
     }
 
-
-    opt.pt_model ='bert-base-uncased'
     logger.info(opt.pt_model)
     opt.optimizer = AdamW
     opt.model_class = ABSATokenizer
