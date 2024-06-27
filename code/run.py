@@ -300,10 +300,8 @@ def main():
     parser.add_argument('--max_seq_len', default=120, type=int)
     parser.add_argument('--lebel-dim', default=5, type=int)
     parser.add_argument('--hops', default=3, type=int)
-    # parser.add_argument('--pt-model', default='activebus/BERT-PT_rest', type=str)
-    parser.add_argument('--pt-model', default='/workspace/plm/BERT-PT_rest', type=str)
     parser.add_argument('--save_model', default=0, type=int)
-    parser.add_argument('--device', default='cuda:5', type=str, help='e.g. cuda:0')
+    parser.add_argument('--device', default='cuda', type=str, help='e.g. cuda:0')
     parser.add_argument('--seed', default=42, type=int, help='set seed for reproducibility')
     parser.add_argument('--valset_ratio', default=0, type=float,
                         help='set ratio between 0 and 1 for validation support')
@@ -334,8 +332,7 @@ def main():
     opt.dataset_file = dataset_files
     opt.inputs_cols = ['text_bert_indices', 'bert_segments_ids', 'input_mask', 'label']
     opt.initializer = torch.nn.init.xavier_uniform_
-    opt.device = torch.device(opt.device if torch.cuda.is_available() else 'cpu') \
-        if opt.device is None else torch.device(opt.device)
+    opt.device = torch.device(opt.device if torch.cuda.is_available() else 'cpu') 
 
     ins = Instructor(opt)
     ins.run()
