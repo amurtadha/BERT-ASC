@@ -21,7 +21,7 @@ logger.addHandler(logging.StreamHandler(sys.stdout))
 from transformers import AutoTokenizer, AutoModel
 import torch.nn as nn
 
-from MyModel import BERT_ASC, BERT_ASC_vanila
+from MyModel import  BERT_ASC_vanila
 
 class Instructor:
     def __init__(self, opt):
