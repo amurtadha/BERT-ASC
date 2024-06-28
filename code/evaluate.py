@@ -11,28 +11,28 @@ import pandas as pd
 from torch.utils.data.sampler import  WeightedRandomSampler
 import torch
 from torch.utils.data import DataLoader, random_split, TensorDataset
-from data_utils import ABSATokenizer, ABSADataset_absa_bert_semeval_json, ABSADataset_absa_bert_sentihood_json
+from data_utils import  ABSADataset_absa_bert_semeval_json, ABSADataset_absa_bert_sentihood_json
 from layers.optimization  import BertAdam
 from evaluation import *
 import torch.nn.functional as F
 import  numpy as np
 import copy
 from  tqdm import tqdm
+from transformers import AutoTokenizer
+
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 logger.addHandler(logging.StreamHandler(sys.stdout))
 
 
-from MyModel import BERT_ASC
+from MyModel import BERT_ASC_vanila
 
 class Instructor:
     def __init__(self, opt):
         self.opt = opt
 
-        self.model = BERT_ASC.from_pretrained(opt.pt_model, num_labels=opt.lebel_dim)
-        self.model.to(self.opt.device)
+        tokenizer = AutoTokenizer.from_pretrained(opt.pretrained_bert_name)
 
-        tokenizer = ABSATokenizer.from_pretrained(opt.pt_model)
         if self.opt.dataset=='semeval':
             self.testset = ABSADataset_absa_bert_semeval_json(opt.dataset_file['test'], tokenizer, opt)
         else:
@@ -41,6 +41,15 @@ class Instructor:
         logger.info(' test {}'.format( len(self.testset)))
         if opt.device.type == 'cuda':
             logger.info('cuda memory allocated: {}'.format(torch.cuda.memory_allocated(device=opt.device.index)))
+
+
+        self.model = BERT_ASC_vanila(opt)
+        self.model.to(self.opt.device)
+
+        if torch.cuda.device_count() > 1:
+            logger.info(f'Using {torch.cuda.device_count()} GPUs.')
+            self.model = nn.DataParallel(self.model)
+
         self._print_args()
 
     def _print_args(self):
@@ -179,15 +188,11 @@ def main():
 
     opt.pt_model =r'plm/pt/'
     print(opt.pt_model)
-    opt.model_class = ABSATokenizer
     opt.dataset_file = dataset_files
     opt.inputs_cols = ['text_bert_indices', 'bert_segments_ids', 'input_mask', 'label']
     opt.initializer = initializers[opt.initializer]
 
-    os.environ["CUDA_VISIBLE_DEVICES"] = '0'
-    opt.device = torch.device(opt.device if torch.cuda.is_available() else 'cpu') \
-        if opt.device is None else torch.device(opt.device)
-
+    opt.device = torch.device(opt.device if torch.cuda.is_available() else 'cpu') 
     ins = Instructor(opt)
     ins.run()
 
