@@ -50,25 +50,31 @@ The original code of L-LDA is publicly [available](https://github.com/JoeZJH/Lab
 
 # Training: 
 * To train  BERT-ASC: 
-	* Go to  code/  
+	* Go to  code/
 	* Run the following code 
 	```
-	python code/run.py --dataset semeval --device cuda:0
+	python code/run.py --dataset semeval 
 	```
 	* The params could be :
 		- --dataset =\{semeval,sentihood\}	
-		- --device ="cuda:0"
-	
+	* Or run  this scripts  code/scripts
+   	```
+	sh training.sh 0 bert-base-uncased 
+	```
 # Evalutaion: 	
 * To evaluate  BERT-ASC:
 	* Go to  code/  
 	* Run the following code 
 	```
-	python code/evaluate.py --dataset semeval --device cuda:0
+	python code/evaluate.py --dataset semeval
 	```
 	* The params could be :
 		- --dataset =\{semeval,sentihood\}	
-		- --device ="cuda:0"	
+	* Or run  this scripts  code/scripts
+
+  	```
+	sh evaluate.sh 0 bert-base-uncased 
+	```	
 
  If you use the code,  please cite the paper: 
 ```
