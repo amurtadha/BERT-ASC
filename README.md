@@ -22,8 +22,7 @@ pip install -r requirements.txt
 # Pre-processing
 
 * Generate seed words for a given dataset (e.g., semeval): 
-	* Go to L-LDA/  
-	* Run the following code
+	* Go to L-LDA/  and  run the following code
 	```
 	python run_l_LDA.py --dataset semeval
 	```
@@ -50,8 +49,7 @@ The original code of L-LDA is publicly [available](https://github.com/JoeZJH/Lab
 
 # Training: 
 * To train  BERT-ASC: 
-	* Go to  code/
-	* Run the following code 
+	* Go to  code/ and run the following code 
 	```
 	python code/run.py --dataset semeval 
 	```
@@ -63,8 +61,7 @@ The original code of L-LDA is publicly [available](https://github.com/JoeZJH/Lab
 	```
 # Evalutaion: 	
 * To evaluate  BERT-ASC:
-	* Go to  code/  
-	* Run the following code 
+	* Go to  code/  and run the following code 
 	```
 	python code/evaluate.py --dataset semeval
 	```
