@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from transformers import   AutoConfig, AutoModelForSequenceClassification
+from transformers import AutoConfig, AutoModelForSequenceClassification
 
 class BERT_ASC_vanila(nn.Module):
     def __init__(self, args, hidden_size=256):
