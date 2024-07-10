@@ -3,38 +3,74 @@
  A model for implicit aspect sentiment analysis.
  
  This is the source code for the paper: Murtadha, Ahmed, et al. "BERT-ASC: Auxiliary-Sentence Construction for Implicit Aspect Learning in Sentiment Analysis" [[1]](https://arxiv.org/abs/2203.11702). 
- 
-## F1 Score Evaluation of Various Arabic NLP Models
-
-Best scores are highlighted in bold. An asterisk (*) denotes statistical significance, determined by a t-test with a p-value (< 0.05). Our AlcLaM not only excels in the DID task but also shows improvements in most other tasks. This performance is expected as most Arabic NLP datasets are collected from social media, which is dominated by dialectal expressions.
-
-|             | Dataset    | Multilingual PLMs     |                 | MSA-based PLMs           |                 | MSA-Dialect-based PLMs                       |
-|-------------|------------|-----------------------|-----------------|--------------------------|-----------------|---------------------------------------------|
-|             |            | mBERT                 | LaBSE           |                          | AraBERT        | ArBERT           |                 | MdBERT          | CAMeL          | MARBERT         | AlcLaM          |
-|-------------|------------|-----------------------|-----------------|--------------------------|-----------------|------------------|-----------------|-----------------|-----------------|-----------------|-----------------|
-| DID         |            |                       |                 |                          |                |                  |                 |                 |                 |                 |                 |
-| MADAR-2     |            | 72.9 ± 16.9           | 86.6 ± 0.5      |                          | 87.1 ± 0.2      | 87.1 ± 0.2       |                 | 86.0 ± 0.6      | 87.5 ± 1.0      | 85.3 ± 3.8      | **98.2 ± 0.1**  |
-| MADAR-6     |            | 91.3 ± 0.1            | 91.1 ± 0.2      |                          | 91.6 ± 0.1      | 91.6 ± 0.2       |                 | 91.6 ± 0.0      | 92.0 ± 0.1      | 92.2 ± 0.2      | **93.2 ± 0.1*** |
-| MADAR-9     |            | 75.5 ± 0.5            | 75.7 ± 0.2      |                          | 76.8 ± 0.3      | 74.5 ± 4.3       |                 | 75.9 ± 0.5      | 77.5 ± 0.4      | 78.2 ± 0.3      | **81.9 ± 0.3**  |
-| MADAR-26    |            | 60.5 ± 0.2            | 62.0 ± 0.2      |                          | 62.0 ± 0.1      | 61.7 ± 0.1       |                 | 60.2 ± 0.4      | 62.9 ± 0.1      | 61.5 ± 0.4      | **66.3 ± 0.1*** |
-| NADI        |            | 17.6 ± 0.5            | 17.6 ± 0.5      |                          | 22.6 ± 0.5      | 22.6 ± 0.5       |                 | 24.9 ± 0.6      | 25.9 ± 0.5      | **28.6 ± 0.8*** | 25.6 ± 0.6      |
-|-------------|------------|-----------------------|-----------------|--------------------------|-----------------|------------------|-----------------|-----------------|-----------------|-----------------|-----------------|
-| SA          |            |                       |                 |                          |                |                  |                 |                 |                 |                 |                 |
-| SemEval     |            | 51.3 ± 1.3            | 64.2 ± 0.7      |                          | 65.4 ± 0.5      | 64.4 ± 0.9       |                 | 65.6 ± 0.3      | 67.1 ± 0.7      | 66.4 ± 0.3      | **69.2 ± 0.4*** |
-| ASAD        |            | 59.8 ± 0.0            | 62.4 ± 0.0      |                          | 41.3 ± 0.0      | 66.9 ± 0.0       |                 | **67.5 ± 0.0**  | 65.8 ± 0.0      | 66.8 ± 0.0      | 66.7 ± 0.0      |
-| AJGT        |            | 86.4 ± 0.3            | 92.4 ± 0.7      |                          | 92.7 ± 0.3      | 92.6 ± 0.4       |                 | 93.6 ± 0.0      | 93.6 ± 0.3      | 93.7 ± 0.1      | **95.0 ± 0.3*** |
-| ASTD        |            | 46.3 ± 1.4            | 55.7 ± 0.4      |                          | 57.5 ± 2.3      | 59.7 ± 0.1       |                 | 61.9 ± 0.4      | 60.2 ± 0.2      | 61.0 ± 0.5      | **64.6 ± 0.1*** |
-| LABR        |            | 81.1 ± 0.0            | 85.4 ± 0.0      |                          | 85.9 ± 0.0      | 85.9 ± 0.0       |                 | 84.7 ± 0.0      | **86.3 ± 0.0**  | 85.0 ± 0.0      | 84.9 ± 0.0      |
-| ARSAS       |            | 73.2 ± 0.7            | 76.2 ± 0.6      |                          | 76.8 ± 0.3      | 76.1 ± 0.2       |                 | 76.3 ± 0.2      | 77.1 ± 0.3      | 76.2 ± 0.2      | **77.9 ± 0.3*** |
-|-------------|------------|-----------------------|-----------------|--------------------------|-----------------|------------------|-----------------|-----------------|-----------------|-----------------|-----------------|
-| HSOD        |            |                       |                 |                          |                |                  |                 |                 |                 |                 |                 |
-| HateSpeech  |            | 67.9 ± 1.4            | 73.7 ± 1.1      |                          | 76.4 ± 1.2      | 76.8 ± 1.4       |                 | 80.0 ± 0.1      | 78.8 ± 0.6      | 80.0 ± 0.8      | **81.4 ± 0.5*** |
-| Offense     |            | 85.3 ± 0.5            | 87.2 ± 0.5      |                          | 90.5 ± 0.4      | 90.5 ± 0.4       |                 | 90.8 ± 0.2      | 89.2 ± 0.5      | 90.8 ± 0.3      | **91.3 ± 0.3*** |
-| Adult       |            | 87.9 ± 0.1            | 87.2 ± 0.3      |                          | 88.6 ± 0.1      | 88.4 ± 0.6       |                 | 88.1 ± 0.0      | 88.6 ± 0.3      | 88.3 ± 0.1      | **89.3 ± 0.3*** |
-
- 
+ # Data
 
 
+
+The datasets used in our experminents can be downloaded from this [SemEval](https://alt.qcri.org/semeval2014/task4/index.php?id=data-and-tools). 
+
+# Prerequisites:
+Required packages are listed in the requirements.txt file:
+
+```
+pip install -r requirements.txt
+```
+# Pre-processing
+
+* Generate seed words for a given dataset (e.g., semeval): 
+	* Go to L-LDA/  and  run the following code
+	```
+	python run_l_LDA.py --dataset semeval
+	```
+The original code of L-LDA is publicly [available](https://github.com/JoeZJH/Labeled-LDA-Python) 
+* Generate the semantic candidates: 
+	* Go to  ASC_generating/  
+	* The processed data and embedings for restaurant is [available](https://drive.google.com/file/d/1L4LRi3BWoCqJt5h45J2GIAW9eP_zjiNc/view). Note that these files were orginally proccessed by [Ruidan He](https://github.com/ruidan/Unsupervised-Aspect-Extraction)
+	* To process your own data and embeddings, put your data file in datasets then run this code:
+	```
+	python preprocessing.py
+	python generate_domain_embedding.py	
+	```
+	* Run the following code to extract the semantic candidates
+	```
+	python semantic_candidate_generating.py --dataset semeval
+	```
+* Generate the synticatic candidates: 
+	* Run the following code to generate the synticatic informatiom
+	```
+	python ASC_generating/opinion_words_extracting.py --dataset semeval
+	```
+
+
+
+# Training: 
+* To train  BERT-ASC: 
+	* Go to  code/ and run the following code 
+	```
+	python code/run.py --dataset semeval 
+	```
+	* The params could be :
+		- --dataset =\{semeval,sentihood\}	
+	* Or run  this scripts  code/scripts
+   	```
+	sh training.sh 0 bert-base-uncased 
+	```
+# Evalutaion: 	
+* To evaluate  BERT-ASC:
+	* Go to  code/  and run the following code 
+	```
+	python code/evaluate.py --dataset semeval
+	```
+	* The params could be :
+		- --dataset =\{semeval,sentihood\}	
+	* Or run  this scripts  code/scripts
+
+  	```
+	sh evaluate.sh 0 bert-base-uncased 
+	```	
+
+ If you use the code,  please cite the paper: 
+```
 @article{murtadha2022bert,
   title={BERT-ASC: Auxiliary-Sentence Construction for Implicit Aspect Learning in Sentiment Analysis},
   author={Murtadha, Ahmed and Pan, Shengfeng and Wen, Bo and Su, Jianlin and Zhang, Wenze and Liu, Yunfeng},
